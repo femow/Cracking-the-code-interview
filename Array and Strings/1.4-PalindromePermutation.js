@@ -3,43 +3,28 @@
 // A palindrome is a word or phrase that is the same forwards and backwards. A permutation is
 // a rearrangement of letters. The palindrome does not need to be limited to just dictionary words.
 
-const tactCoa = "tact coa";
 const palindromesOfTactCoa = [
     "taco cat", // TRUE
     "atco cta", // TRUE
+    "ata", // TRUE
+    "aa", // TRUE
     "ttac cat", // FALSE
 ]
 
-function checkPalindrome(word, palindrome) {
-    if(word.length !== palindrome.length) {
-        return false;
+function checkPalindrome(palindrome) {
+    const noSpacesPalindrome = palindrome.replace(/\s/g, "")
+    let left = 0;
+    let right = noSpacesPalindrome.length - 1;
+    while(left <= right) {
+        if(noSpacesPalindrome.charAt(left) !== noSpacesPalindrome.charAt(right)) {
+            return false
+        }
+        left++;
+        right--;
     }
-    const dicLetters = {};
-    const wordLen = word.length;
-    for(let i = 0; i < wordLen; i++) {
-        const c = word.charAt(i);
-        if(dicLetters[c] === undefined) {
-            dicLetters[c] = 1;
-        }
-        else {
-            dicLetters[c]++;
-        }
-    }
-    for(let i = 0; i < wordLen; i++) {
-        const c = palindrome.charAt(i);
-        if(dicLetters[c] === undefined) {
-            return false;
-        }
-        
-        dicLetters[c]--;
-        if(dicLetters[c] < 0) {
-            return false;
-        }
-    }
-
     return true;
 }
 
-console.log(checkPalindrome(tactCoa, palindromesOfTactCoa[0]));
-console.log(checkPalindrome(tactCoa, palindromesOfTactCoa[1]));
-console.log(checkPalindrome(tactCoa, palindromesOfTactCoa[2]));
+for(let i = 0; i < palindromesOfTactCoa.length; i++) {
+    console.log(checkPalindrome(palindromesOfTactCoa[i]));
+}
